@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeysFahi — find your medicine at a pharmacy near you</title>
+  <meta name="description" content="BeysFahi shows which pharmacies in the Maldives have the medicine you need, from each pharmacy's live stock. An app by MEDILIX MALDIVES PRIVATE LIMITED.">
+  <link rel="icon" href="favicon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0279BE;
+      --primary-dark: #075985;
+      --sky: #38BDF8;
+      --cyan: #22D3EE;
+      --text: #0F172A;
+      --muted: #64748B;
+      --card: rgba(255, 255, 255, 0.72);
+      --line: rgba(15, 23, 42, 0.08);
+      --bg: #EAF6FD;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #F1F5F9;
+        --muted: #94A3B8;
+        --card: rgba(15, 23, 42, 0.6);
+        --line: rgba(241, 245, 249, 0.1);
+        --bg: #0B1220;
+        --primary-dark: #7DD3FC;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: Inter, -apple-system, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 15% -10%, rgba(56, 189, 248, 0.28), transparent 60%),
+        radial-gradient(700px 500px at 100% 100%, rgba(129, 140, 248, 0.18), transparent 60%),
+        var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.55;
+    }
+    main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 72px 20px 48px; }
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .brand img { width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 10px 30px rgba(2, 121, 190, 0.3); }
+    .wordmark {
+      font-family: Nunito, sans-serif; font-weight: 900; font-size: 48px; letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #075985 0%, #0279BE 45%, #38BDF8 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    h1 { font-size: clamp(30px, 6vw, 44px); line-height: 1.15; letter-spacing: -0.8px; margin: 40px 0 16px; }
+    .lead { font-size: 19px; color: var(--muted); max-width: 600px; }
+    .soon {
+      display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 10px 16px;
+      border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-weight: 600; font-size: 15px;
+    }
+    .soon::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 48px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; backdrop-filter: blur(12px); }
+    .card h2 { font-size: 16px; margin-bottom: 6px; }
+    .card p { font-size: 15px; color: var(--muted); }
+    .pharmacies { margin-top: 16px; }
+    a { color: var(--primary-dark); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer { border-top: 1px solid var(--line); padding: 24px 20px 32px; font-size: 13px; color: var(--muted); }
+    footer .inner { max-width: 760px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+    footer nav { display: flex; gap: 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">
+      <img src="icon.png" alt="">
+      <span class="wordmark" aria-label="beysfahi">beysfahi</span>
+    </div>
+
+    <h1>Find your medicine at a pharmacy near you.</h1>
+    <p class="lead">BeysFahi shows which pharmacies in the Maldives have the medicine you need, using each pharmacy's live stock, so you know where to go before you leave home.</p>
+    <span class="soon">Coming soon to the App Store and Google Play</span>
+
+    <div class="cards">
+      <div class="card">
+        <h2>Search by name</h2>
+        <p>See which nearby pharmacies have it, whether they're open, and call or get directions.</p>
+      </div>
+      <div class="card">
+        <h2>Scan a prescription</h2>
+        <p>Take a photo and BeysFahi finds every medicine on it. BeysFahi doesn't keep the image.</p>
+      </div>
+      <div class="card">
+        <h2>Live stock</h2>
+        <p>Pharmacies connect their own inventory systems, so stock stays up to date.</p>
+      </div>
+    </div>
+
+    <div class="card pharmacies">
+      <h2>For pharmacies</h2>
+      <p>Want your pharmacy to appear in BeysFahi? Email <a href="mailto:info@beysfahi.com">info@beysfahi.com</a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <span>BeysFahi is an app by <strong>MEDILIX MALDIVES PRIVATE LIMITED</strong> · Reg. no. C24952025 · Maldives · <a href="mailto:info@beysfahi.com">info@beysfahi.com</a></span>
+      <nav>
+        <a href="https://beysfahi--staging.expo.app/privacy">Privacy policy</a>
+        <a href="https://beysfahi--staging.expo.app/terms">Terms of use</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
