@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>BeysFahi — find your medicine at a pharmacy near you</title>
   <meta name="description" content="BeysFahi shows which pharmacies in the Maldives have the medicine you need, from each pharmacy's live stock. An app by MEDILIX MALDIVES PRIVATE LIMITED.">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -14,103 +14,274 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    /* Layout: hero with copy beside an app-on-a-phone teaser (stacked on phones), feature row,
+       pharmacy band, footer. Colours and type from the brand guide (brand-studio/brands/beysfahi). */
     :root {
-      /* Brand guide (brand-studio/brands/beysfahi): blue, lagoon teal, cyan, brand neutrals. */
       --primary: #0279BE;
       --primary-dark: #075985;
       --secondary: #0B7A6E;
       --secondary-soft: #DFFFF9;
       --cyan: #22D3EE;
+      --sky: #38BDF8;
+      --success: #047857;
+      --success-soft: #D1FAE5;
+      --warning: #B45309;
+      --warning-soft: #FEF3C7;
       --text: #0F172A;
       --muted: #697075;
-      --card: rgba(255, 255, 255, 0.72);
+      --card: rgba(255, 255, 255, 0.78);
+      --card-solid: #FFFFFF;
       --line: rgba(15, 23, 42, 0.08);
       --bg: #F3F8FC;
+      --phone-screen: #F3F8FC;
+      --shadow: 0 30px 60px -20px rgba(7, 89, 133, 0.35);
+      --highlight: #0279BE;
+      --phone-ring: rgba(15, 23, 42, 0.12);
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --text: #F1F5F9;
-        --muted: #94A3B8;
-        --card: rgba(15, 23, 42, 0.6);
+        --muted: #A7B0B8;
+        --card: rgba(18, 30, 43, 0.72);
+        --card-solid: #142233;
         --line: rgba(241, 245, 249, 0.1);
         --bg: #0B1220;
+        --phone-screen: #0F1A27;
         --primary-dark: #7DD3FC;
         --secondary: #5FB3A6;
         --secondary-soft: rgba(95, 179, 166, 0.12);
+        --success: #34D399;
+        --success-soft: rgba(52, 211, 153, 0.14);
+        --warning: #FBBF24;
+        --warning-soft: rgba(251, 191, 36, 0.14);
+        --shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+        --highlight: #38BDF8;
+        --phone-ring: rgba(255, 255, 255, 0.16);
+        color-scheme: dark;
       }
     }
     * { box-sizing: border-box; margin: 0; }
     body {
       font-family: Nunito, -apple-system, system-ui, sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(900px 500px at 15% -10%, rgba(56, 189, 248, 0.28), transparent 60%),
-        radial-gradient(700px 500px at 100% 100%, rgba(129, 140, 248, 0.18), transparent 60%),
-        var(--bg);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--bg);
       line-height: 1.55;
+      overflow-x: hidden;
     }
-    main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 72px 20px 48px; }
-    .brand img { display: block; height: 52px; width: auto; max-width: 100%; }
-    h1 { font-weight: 900; font-size: clamp(30px, 6vw, 46px); line-height: 1.12; letter-spacing: -0.5px; margin: 40px 0 16px; text-wrap: balance; }
-    .lead { font-size: 19px; color: var(--muted); max-width: 600px; }
-    .soon {
-      display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 10px 16px;
-      border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-weight: 600; font-size: 15px;
-    }
-    .soon::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2); }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 48px; }
-    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; backdrop-filter: blur(12px); }
-    .card h2 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
-    .pharmacies { background: var(--secondary-soft); border-color: transparent; }
-    .pharmacies h2 { color: var(--secondary); }
-    .card p { font-size: 15px; color: var(--muted); }
-    .pharmacies { margin-top: 16px; }
-    a { color: var(--primary-dark); font-weight: 600; text-decoration: none; }
+    a { color: var(--primary-dark); font-weight: 700; text-decoration: none; }
     a:hover { text-decoration: underline; }
-    footer { border-top: 1px solid var(--line); padding: 24px 20px 32px; font-size: 13px; color: var(--muted); }
-    footer .inner { max-width: 760px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+    a:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+    .wrap {
+      width: 100%; max-width: 1120px; margin: 0 auto;
+      padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px));
+    }
+
+    /* Hero */
+    .hero { position: relative; isolation: isolate; padding-block: 40px 96px; overflow-x: clip; }
+    .hero::before {
+      /* Lagoon light: sky and teal pools behind everything. */
+      content: ""; position: absolute; inset: -20% -10% 0; z-index: -2;
+      background:
+        radial-gradient(520px 420px at 78% 38%, rgba(34, 211, 238, 0.30), transparent 70%),
+        radial-gradient(640px 520px at 12% 8%, rgba(56, 189, 248, 0.26), transparent 70%),
+        radial-gradient(520px 380px at 92% 92%, rgba(11, 122, 110, 0.16), transparent 70%);
+    }
+    .waves { position: absolute; left: 0; right: 0; bottom: 0; z-index: -1; width: 100%; height: 120px; color: var(--sky); opacity: 0.35; }
+    .brand img { display: block; height: 48px; width: auto; max-width: 100%; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; margin-top: 48px; }
+    .copy { min-width: 0; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-weight: 700; font-size: 14px; backdrop-filter: blur(10px); }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.22); }
+    h1 { font-weight: 900; font-size: clamp(36px, 6.2vw, 64px); line-height: 1.04; letter-spacing: -1px; margin: 22px 0 18px; text-wrap: balance; }
+    h1 .hl { color: var(--highlight); }
+    .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 520px; }
+    .promises { list-style: none; padding: 0; margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .promises li { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; padding: 9px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+    .promises svg { width: 18px; height: 18px; color: var(--secondary); flex: none; }
+
+    /* The phone teaser */
+    .stage { position: relative; display: flex; justify-content: center; padding: 20px 0; min-width: 0; }
+    .phone {
+      position: relative; width: 300px; max-width: 78vw; aspect-ratio: 300 / 610; border-radius: 46px; padding: 11px;
+      background: #0B1220; box-shadow: var(--shadow), 0 0 0 2px var(--phone-ring); transform: rotate(-3deg);
+    }
+    .screen { position: relative; height: 100%; border-radius: 36px; overflow: hidden; background: var(--phone-screen); padding: 46px 14px 14px; display: flex; flex-direction: column; gap: 10px; }
+    .island { position: absolute; top: 12px; left: 50%; width: 92px; height: 26px; margin-left: -46px; border-radius: 16px; background: #0B1220; }
+    .screen .mini-logo { height: 18px; width: auto; align-self: flex-start; }
+    .search { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 14px; background: var(--card-solid); border: 1px solid var(--line); font-weight: 800; font-size: 14px; }
+    .search svg { width: 16px; height: 16px; color: var(--muted); }
+    .answer { font-weight: 800; font-size: 13px; color: var(--secondary); padding: 2px 4px; }
+    .result { border-radius: 16px; background: var(--card-solid); border: 1px solid var(--line); padding: 11px 12px; display: flex; flex-direction: column; gap: 6px; }
+    .result.best { border: 1.5px solid var(--secondary); padding-top: 0; overflow: hidden; }
+    .best-tag { margin: 0 -12px 2px; padding: 5px 12px; background: var(--secondary); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 0.3px; }
+    .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .place { font-weight: 800; font-size: 13.5px; }
+    .meta { font-size: 12px; color: var(--muted); }
+    .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+    .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .in { color: var(--success); background: var(--success-soft); }
+    .low { color: var(--warning); background: var(--warning-soft); }
+    .open { font-size: 12px; font-weight: 700; color: var(--success); }
+
+    .chip {
+      position: absolute; display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 16px;
+      background: var(--card-solid); border: 1px solid var(--line); box-shadow: var(--shadow); font-weight: 800; font-size: 14px; max-width: 230px;
+    }
+    .chip small { display: block; font-weight: 600; font-size: 12px; color: var(--muted); }
+    .chip .ico { flex: none; width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; }
+    .chip .ico svg { width: 20px; height: 20px; }
+    /* Both over the empty lower part of the screen, so neither hides the results. */
+    .chip.scan { bottom: 15%; left: -8%; }
+    .chip.scan .ico { background: rgba(2, 121, 190, 0.12); color: var(--primary); }
+    .chip.insure { bottom: 2%; right: -6%; }
+    .chip.insure .ico { background: var(--secondary-soft); color: var(--secondary); }
+    @media (prefers-reduced-motion: no-preference) {
+      .chip.scan { animation: drift 7s ease-in-out infinite; }
+      .chip.insure { animation: drift 8s ease-in-out -3s infinite; }
+      @keyframes drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    }
+
+    /* Features */
+    .features { padding-block: 24px 24px; }
+    .features h2, .band h2 { font-weight: 900; font-size: clamp(26px, 3.6vw, 36px); line-height: 1.15; letter-spacing: -0.5px; text-wrap: balance; }
+    .features .sub { color: var(--muted); font-size: 17px; margin-top: 8px; max-width: 560px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+    .feature { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 8px; backdrop-filter: blur(10px); }
+    .feature .ico { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; background: rgba(2, 121, 190, 0.1); color: var(--primary); }
+    .feature:nth-child(2) .ico { background: rgba(34, 211, 238, 0.16); color: #0497AB; }
+    .feature:nth-child(3) .ico { background: var(--secondary-soft); color: var(--secondary); }
+    .feature .ico svg { width: 22px; height: 22px; }
+    .feature h3 { font-size: 18px; font-weight: 800; margin-top: 4px; }
+    .feature p { color: var(--muted); font-size: 15.5px; }
+
+    /* Pharmacy band */
+    .band { margin-block: 40px 64px; }
+    .band .inner { border-radius: 24px; padding: 32px; background: linear-gradient(135deg, var(--secondary) 0%, #0F7C8D 55%, var(--primary) 100%); color: #fff; display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
+    .band .inner::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); }
+    .band p { color: rgba(255, 255, 255, 0.86); font-size: 17px; margin-top: 6px; max-width: 520px; }
+    .band .mail { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 14px; background: #fff; color: var(--secondary); font-weight: 800; font-size: 16px; }
+    .band .mail:hover { text-decoration: none; filter: brightness(0.97); }
+    .band .mail svg { width: 18px; height: 18px; }
+
+    footer { border-top: 1px solid var(--line); padding-block: 24px max(32px, env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--muted); }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
     footer nav { display: flex; gap: 18px; }
+
+    @media (max-width: 860px) {
+      .hero { padding-bottom: 72px; }
+      .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 32px; }
+      .grid { grid-template-columns: minmax(0, 1fr); }
+      .chip.scan { left: 0; bottom: 15%; }
+      .chip.insure { right: 0; bottom: 2%; }
+    }
+    @media (max-width: 420px) {
+      .chip { font-size: 13px; padding: 8px 11px 8px 8px; max-width: 190px; }
+      .chip .ico { width: 30px; height: 30px; }
+      .chip small { display: none; }
+      .band .inner { padding: 24px; }
+    }
   </style>
 </head>
 <body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="brand">
+        <picture>
+          <source srcset="logo-reverse.svg" media="(prefers-color-scheme: dark)">
+          <img src="logo.svg" alt="BeysFahi" width="179" height="48">
+        </picture>
+      </div>
+
+      <div class="hero-grid">
+        <div class="copy">
+          <span class="eyebrow">Coming soon to iPhone and Android</span>
+          <h1>See who has your medicine <span class="hl">before you go.</span></h1>
+          <p class="lead">BeysFahi shows which pharmacies in the Maldives have the medicine you need, how far away they are and whether they take your insurance. No more calling round.</p>
+          <ul class="promises">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Every pharmacy, one search</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Malé and the islands</li>
+          </ul>
+        </div>
+
+        <div class="stage" aria-hidden="true">
+          <div class="phone">
+            <div class="screen">
+              <span class="island"></span>
+              <picture><source srcset="logo-reverse.svg" media="(prefers-color-scheme: dark)"><img class="mini-logo" src="logo.svg" alt=""></picture>
+              <div class="search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                Amoxil 500 mg
+              </div>
+              <div class="answer">3 pharmacies near you have it</div>
+              <div class="result best">
+                <div class="best-tag">★ Nearest open</div>
+                <div class="row"><span class="place">Nearest pharmacy</span><span class="pill in">In stock</span></div>
+                <div class="row"><span class="meta">400 m away</span><span class="open">Open now</span></div>
+              </div>
+              <div class="result">
+                <div class="row"><span class="place">Hulhumalé Phase 2</span><span class="pill in">In stock</span></div>
+                <div class="row"><span class="meta">2.1 km away</span><span class="open">Open now</span></div>
+              </div>
+              <div class="result">
+                <div class="row"><span class="place">Malé, near the harbour</span><span class="pill low">Low stock</span></div>
+                <div class="row"><span class="meta">1.2 km · call ahead</span><span class="open">Open now</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="chip scan">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
+            <span>Scan your prescription<small>Finds every medicine on it</small></span>
+          </div>
+          <div class="chip insure">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span>Takes your insurance?<small>See it for every pharmacy</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M0 70 C 180 30, 360 110, 540 70 S 900 30, 1080 70 S 1320 110, 1440 70"/><path fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6" d="M0 95 C 200 60, 380 125, 560 95 S 920 60, 1100 95 S 1330 125, 1440 95"/></svg>
+  </header>
+
   <main>
-    <div class="brand">
-      <picture>
-        <source srcset="logo-reverse.svg" media="(prefers-color-scheme: dark)">
-        <img src="logo.svg" alt="BeysFahi" width="195" height="52">
-      </picture>
-    </div>
-
-    <h1>Find your medicine at a pharmacy near you.</h1>
-    <p class="lead">BeysFahi shows which pharmacies in the Maldives have the medicine you need, using each pharmacy's live stock, so you know where to go before you leave home.</p>
-    <span class="soon">Coming soon to the App Store and Google Play</span>
-
-    <div class="cards">
-      <div class="card">
-        <h2>Search by name</h2>
-        <p>See which nearby pharmacies have it, whether they're open, and call or get directions.</p>
+    <section class="features">
+      <div class="wrap">
+        <h2>Answers in seconds.</h2>
+        <p class="sub">One search box, and nothing to learn. Stock comes straight from each pharmacy, so you can see how fresh it is.</p>
+        <div class="grid">
+          <div class="feature">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+            <h3>Search by name</h3>
+            <p>See which nearby pharmacies have it, whether they're open, and call or get directions.</p>
+          </div>
+          <div class="feature">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>
+            <h3>Scan a prescription</h3>
+            <p>Take a photo and BeysFahi finds every medicine on it. BeysFahi doesn't keep the image.</p>
+          </div>
+          <div class="feature">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></span>
+            <h3>Live stock</h3>
+            <p>Pharmacies connect their own systems, so you see what's on the shelf and when it was last updated.</p>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h2>Scan a prescription</h2>
-        <p>Take a photo and BeysFahi finds every medicine on it. BeysFahi doesn't keep the image.</p>
-      </div>
-      <div class="card">
-        <h2>Live stock</h2>
-        <p>Pharmacies connect their own inventory systems, so stock stays up to date.</p>
-      </div>
-    </div>
+    </section>
 
-    <div class="card pharmacies">
-      <h2>For pharmacies</h2>
-      <p>Want your pharmacy to appear in BeysFahi? Email <a href="mailto:info@beysfahi.com">info@beysfahi.com</a>.</p>
-    </div>
+    <section class="band">
+      <div class="wrap">
+        <div class="inner">
+          <div>
+            <h2>Run a pharmacy?</h2>
+            <p>Help people find you when they need you. Ask us about listing your pharmacy in BeysFahi.</p>
+          </div>
+          <a class="mail" href="mailto:info@beysfahi.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>info@beysfahi.com</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <div class="inner">
+    <div class="wrap">
       <span>BeysFahi is an app by <strong>MEDILIX MALDIVES PRIVATE LIMITED</strong> · Reg. no. C24952025 · Maldives · <a href="mailto:info@beysfahi.com">info@beysfahi.com</a></span>
       <nav>
         <a href="https://beysfahi--staging.expo.app/privacy">Privacy policy</a>
