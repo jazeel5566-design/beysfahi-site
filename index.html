@@ -5,22 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BeysFahi — find your medicine at a pharmacy near you</title>
   <meta name="description" content="BeysFahi shows which pharmacies in the Maldives have the medicine you need, from each pharmacy's live stock. An app by MEDILIX MALDIVES PRIVATE LIMITED.">
-  <link rel="icon" href="favicon.png">
-  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0279BE">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* Brand guide (brand-studio/brands/beysfahi): blue, lagoon teal, cyan, brand neutrals. */
       --primary: #0279BE;
       --primary-dark: #075985;
-      --sky: #38BDF8;
+      --secondary: #0B7A6E;
+      --secondary-soft: #DFFFF9;
       --cyan: #22D3EE;
       --text: #0F172A;
-      --muted: #64748B;
+      --muted: #697075;
       --card: rgba(255, 255, 255, 0.72);
       --line: rgba(15, 23, 42, 0.08);
-      --bg: #EAF6FD;
+      --bg: #F3F8FC;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -30,11 +35,13 @@
         --line: rgba(241, 245, 249, 0.1);
         --bg: #0B1220;
         --primary-dark: #7DD3FC;
+        --secondary: #5FB3A6;
+        --secondary-soft: rgba(95, 179, 166, 0.12);
       }
     }
     * { box-sizing: border-box; margin: 0; }
     body {
-      font-family: Inter, -apple-system, system-ui, sans-serif;
+      font-family: Nunito, -apple-system, system-ui, sans-serif;
       color: var(--text);
       background:
         radial-gradient(900px 500px at 15% -10%, rgba(56, 189, 248, 0.28), transparent 60%),
@@ -46,14 +53,8 @@
       line-height: 1.55;
     }
     main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 72px 20px 48px; }
-    .brand { display: flex; align-items: center; gap: 16px; }
-    .brand img { width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 10px 30px rgba(2, 121, 190, 0.3); }
-    .wordmark {
-      font-family: Nunito, sans-serif; font-weight: 900; font-size: 48px; letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #075985 0%, #0279BE 45%, #38BDF8 100%);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    h1 { font-size: clamp(30px, 6vw, 44px); line-height: 1.15; letter-spacing: -0.8px; margin: 40px 0 16px; }
+    .brand img { display: block; height: 52px; width: auto; max-width: 100%; }
+    h1 { font-weight: 900; font-size: clamp(30px, 6vw, 46px); line-height: 1.12; letter-spacing: -0.5px; margin: 40px 0 16px; text-wrap: balance; }
     .lead { font-size: 19px; color: var(--muted); max-width: 600px; }
     .soon {
       display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 10px 16px;
@@ -62,7 +63,9 @@
     .soon::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.2); }
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 48px; }
     .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; backdrop-filter: blur(12px); }
-    .card h2 { font-size: 16px; margin-bottom: 6px; }
+    .card h2 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .pharmacies { background: var(--secondary-soft); border-color: transparent; }
+    .pharmacies h2 { color: var(--secondary); }
     .card p { font-size: 15px; color: var(--muted); }
     .pharmacies { margin-top: 16px; }
     a { color: var(--primary-dark); font-weight: 600; text-decoration: none; }
@@ -75,8 +78,10 @@
 <body>
   <main>
     <div class="brand">
-      <img src="icon.png" alt="">
-      <span class="wordmark" aria-label="beysfahi">beysfahi</span>
+      <picture>
+        <source srcset="logo-reverse.svg" media="(prefers-color-scheme: dark)">
+        <img src="logo.svg" alt="BeysFahi" width="195" height="52">
+      </picture>
     </div>
 
     <h1>Find your medicine at a pharmacy near you.</h1>
